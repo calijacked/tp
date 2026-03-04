@@ -9,6 +9,15 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
+### Ng See Pui
+
+<img src="images/seepui.png" width="200px">
+
+[[github](https://github.com/SeePui)]
+
+* Role: Team Lead
+* Responsibilities: Scheduling & Tracking
+
 ### Chua Chloe
 
 <img src="images/sqonky1.png" width="200px">
