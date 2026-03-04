@@ -288,32 +288,37 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `CampusBridge` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use Case: UC01 - Add a contact**
 
-**MSS**
+**Preconditions: Application is running**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+**MSS:**
+1. User provides contact details for contact.
+2. CampusBridge saves the contact details. 
+3. CampusBridge saves the updated list to storage. 
+4. CampusBridge shows a success message.
 
-    Use case ends.
+Use case ends.
 
-**Extensions**
-
-* 2a. The list is empty.
-
+**Extension:**
+* 1a. User input is empty. 
+  * 1a1. CampusBridge shows a failure message indicating that user input is empty.
+  
   Use case ends.
-
-* 3a. The given index is invalid.
-
-    * 3a1. AddressBook shows an error message.
-
-      Use case resumes at step 2.
-
-*{More to be added}*
+* 1b. User input does not follow the specified format. 
+  * 1b1. CampusBridge shows a failure message indicating that input is invalid. 
+  
+  Use case ends.
+* 1c. Email provided in contact details already exists in the contact list. 
+  * 1c1. CampusBridge shows a failure message indicating that email already exists.
+  
+  Use case ends. 
+* 3a. Storage file cannot be written or accessed. 
+  * 3a1. CampusBridge shows a failure message indicating that the list could not be saved.
+  
+  Use case ends.
 
 ### Non-Functional Requirements
 
