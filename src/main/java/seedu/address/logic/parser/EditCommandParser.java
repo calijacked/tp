@@ -8,10 +8,13 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TELEGRAM_HANDLE;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+
+import java.util.logging.Logger;
 
 
 /**
@@ -22,6 +25,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Duplicate prefixes are not allowed.
  */
 public class EditCommandParser implements Parser<EditCommand> {
+
+    private static final Logger logger = LogsCenter.getLogger(EditCommandParser.class);
 
     /**
      * Parses the given {@code args} string in the context of the {@link EditCommand}
@@ -51,17 +56,9 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         ParserUtil.validateNoEmptyPrefixValues(argMultimap, ADD_EDIT_COMMAND_PREFIXES);
 
-        String preamble = argMultimap.getPreamble().trim();
-        if (preamble.isEmpty() || preamble.contains(" ")) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
-        }
+        ParserUtil.validatePreambleIsIndex(argMultimap, EditCommand.MESSAGE_USAGE);
 
-        Index index;
-        try {
-            index = ParserUtil.parseIndex(preamble);
-        } catch (ParseException pe) {
-            throw new ParseException(pe.getMessage());
-        }
+        Index index = ParserUtil.parseIndex(argMultimap.getPreamble().trim());
 
         argMultimap.verifyNoDuplicatePrefixesFor(ADD_EDIT_COMMAND_PREFIXES);
 
@@ -86,6 +83,8 @@ public class EditCommandParser implements Parser<EditCommand> {
                     EditCommand.MESSAGE_USAGE));
         }
 
+        assert editPersonDescriptor.isAnyFieldEdited() : "Descriptor should have at least one edited field";
+        logger.fine("Parsed edit command for index: " + index.getOneBased());
         return new EditCommand(index, editPersonDescriptor);
     }
 }

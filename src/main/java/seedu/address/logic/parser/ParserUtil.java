@@ -332,18 +332,18 @@ public class ParserUtil {
         }
     }
     /**
-     * Validates that the preamble contains exactly one token (the index).
+     * Validates that the preamble of the given {@code ArgumentMultimap} contains
+     * exactly one token suitable for parsing as an index.
      *
      * @param argMultimap the ArgumentMultimap containing the tokenized arguments
      * @param usageMessage the command usage message to include in the exception
-     * @return the parsed {@code Index} from the preamble
-     * @throws ParseException if the preamble is empty, contains multiple tokens, or is not a valid index
+     * @throws ParseException if the preamble is empty or contains multiple tokens
      */
-    public static Index validateAndParseIndex(ArgumentMultimap argMultimap, String usageMessage) throws ParseException {
+    public static void validatePreambleIsIndex(ArgumentMultimap argMultimap, String usageMessage)
+            throws ParseException {
         String preamble = argMultimap.getPreamble().trim();
         if (preamble.isEmpty() || preamble.contains(" ")) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, usageMessage));
         }
-        return parseIndex(preamble);
     }
 }
